@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Love Confession</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-image: url('https://i.ibb.co/JHM03pb/romantic-background.jpg');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh; /* Changed to min-height */
+      margin: 0;
+      overflow: hidden;
+      animation: backgroundAnimation 15s ease-in-out infinite alternate;
+      position: relative;
+    }
+
+    @keyframes backgroundAnimation {
+      0% { background-color: rgba(255, 255, 255, 0.8); }
+      100% { background-color: rgba(255, 255, 255, 0.5); }
+    }
+
+    form {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+      animation: fadeIn 1s ease-in-out;
+      backdrop-filter: blur(10px);
+      z-index: 1;
+    }
+
+    h2 {
+      font-family: 'Pacifico', cursive;
+      color: #d63384;
+      font-size: 36px;
+      margin-bottom: 15px;
+    }
+
+    h3 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #666;
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      width: calc(100% - 24px);
+      margin-bottom: 20px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #d63384;
+      box-shadow: 0 0 5px rgba(214, 51, 132, 0.5);
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    input[type="button"] {
+      background-color: #d63384;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 0 10px;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    input[type="button"]:hover {
+      background-color: #b8286f;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .reset-button {
+      background-color: #6c757d;
+    }
+
+    .reset-button:hover {
+      background-color: #5a6268;
+    }
+
+    #response {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    #response.green {
+      color: #28a745;
+    }
+
+    #response.red {
+      color: #e74c3c;
+    }
+
+    .love-message {
+      font-size: 16px;
+      margin-top: 20px;
+      color: #333;
+      display: none; /* Hidden by default */
+    }
+
+    .confession-card {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      border: 2px solid #d63384;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.9);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .heart {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: #d63384;
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      animation: heartbeat 1.5s infinite alternate;
+      display: none; /* Hidden by default */
+      z-index: 2;
+    }
+
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.2); }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <form id="loveForm">
+    <h2>I Love You</h2>
+    <h3>Will You Marry Me?</h3>
+    <input type="text" id="name" placeholder="Your Name" required>
+    <div class="buttons">
+      <input type="button" value="Yes" id="yes">
+      <input type="button" value="No" id="no">
+      <input type="button" value="Reset" class="reset-button" id="reset">
+    </div>
+    <p id="response"></p>
+    <p class="love-message" id="loveMessage"></p>
+    <div class="confession-card" id="confessionCard"></div>
+  </form>
+
+  <div class="heart" id="heart"></div>
+
+  <audio id="backgroundMusic" loop>
+    <source src="https://example.com/your-music-file.mp3" type="audio/mpeg"> <!-- Replace with your music URL -->
+    Your browser does not support the audio tag.
+  </audio>
+
+  <script>
+    // Start background music
+    const music = document.getElementById('backgroundMusic');
+    music.volume = 0.3; // Set volume to 30%
+    music.play();
+
+    // Love messages array
+    const loveMessages = [
+      "You make my heart smile!",
+      "I adore you more than words can say!",
+      "You are my sunshine on a rainy day!",
+      "With you, every moment is a treasure!",
+      "You are my favorite person!",
+      "You complete me!",
+      "You're the missing piece I've been searching for!",
+      "I can't imagine my life without you!",
+    ];
+
+    const colors = ['#ff7f50', '#ffa07a', '#20b2aa', '#87cefa', '#ff69b4', '#9370db'];
+
+    const heart = document.getElementById('heart');
+
+    // Position the heart on mouse move
+    document.addEventListener('mousemove', (e) => {
+      heart.style.left = e.pageX + 'px';
+      heart.style.top = e.pageY + 'px';
+      heart.style.display = 'block'; // Show the heart on mouse move
+    });
+
+    // Hide the heart when the mouse is clicked
+    document.addEventListener('click', () => {
+      heart.style.display = 'none';
+    });
+
+    document.getElementById('yes').addEventListener('click', function() {
+      const name = document.getElementById('name').value || "Dear";
+      const responseText = `You said Yes, ${name}! I'm so happy!`;
+      showResponse(responseText, "green");
+      showLoveMessage();
+      showConfessionCard(name);
+      changeBackgroundColor(); // Change background color
+    });
+
+    document.getElementById('no').addEventListener('click', function() {
+      const name = document.getElementById('name').value || "Dear";
+      const responseText = `You said No, ${name}... That's heartbreaking.`;
+      showResponse(responseText, "red");
+      hideLoveMessage(); // Hide love message if they say no
+      hideConfessionCard(); // Hide confession card if they say no
+    });
+
+    document.getElementById('reset').addEventListener('click', function() {
+      document.getElementById('name').value = '';
+      document.getElementById('response').textContent = '';
+      document.getElementById('response').style.opacity = 0;
+      document.getElementById('loveMessage').style.display = 'none'; // Hide message on reset
+      hideConfessionCard(); // Hide confession card on reset
+      heart.style.display = 'none'; // Hide the heart on reset
+    });
+
+    function showResponse(text, colorClass) {
+      const responseElement = document.getElementById('response');
+      responseElement.textContent = text;
+      responseElement.className = colorClass;
+      responseElement.style.opacity = 1;
+
+      // Fade out the response after 3 seconds
+      setTimeout(() => {
+        responseElement.style.opacity = 0;
+      }, 3000);
+    }
+
+    function showLoveMessage() {
+      const messageElement = document.getElementById('loveMessage');
+      const randomMessage = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+      messageElement.textContent = randomMessage;
+      messageElement.style.display = 'block'; // Show the message
+      messageElement.style.opacity = 1; // Make sure it is visible
+    }
+
+    function hideLoveMessage() {
+      const messageElement = document.getElementById('loveMessage');
+      messageElement.style.display = 'none'; // Hide the message
+    }
+
+    function showConfessionCard(name) {
+      const cardElement = document.getElementById('confessionCard');
+      cardElement.innerHTML = `<h3>Dear ${name},</h3><p>You are my everything!</p><p>💖 Forever yours! 💖</p>`;
+      cardElement.style.display = 'block'; // Show the confession card
+    }
+
+    function hideConfessionCard() {
+      const cardElement = document.getElementById('confessionCard');
+      cardElement.style.display = 'none'; // Hide the confession card
+    }
+
+    function changeBackgroundColor() {
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      document.body.style.backgroundColor = randomColor;
+      setTimeout(() => {
+        document.body.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+      }, 1000); // Change back to the original background after 1 second
+    }
+  </script>
+</body>
+</html>
