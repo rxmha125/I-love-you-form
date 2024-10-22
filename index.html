@@ -16,7 +16,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh; /* Changed to min-height */
+      min-height: 100vh;
       margin: 0;
       overflow: hidden;
       animation: backgroundAnimation 15s ease-in-out infinite alternate;
@@ -39,6 +39,7 @@
       animation: fadeIn 1s ease-in-out;
       backdrop-filter: blur(10px);
       z-index: 1;
+      overflow: hidden; /* Prevent overflow of the form */
     }
 
     h2 {
@@ -127,11 +128,13 @@
     .confession-card {
       display: none;
       margin-top: 20px;
-      padding: 20px;
+      padding: 10px;
       border: 2px solid #d63384;
       border-radius: 10px;
       background-color: rgba(255, 255, 255, 0.9);
       animation: fadeIn 1s ease-in-out;
+      max-height: 200px; /* Set max height for scrolling */
+      overflow-y: auto; /* Enable vertical scrolling */
     }
 
     .heart {
